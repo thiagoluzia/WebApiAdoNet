@@ -99,6 +99,51 @@ namespace WF_ConsumindoAPI
             GetAllSelecao();
         }
 
+        /// <summary>
+        /// Atualiza a seleção passando o objeto preenchido.
+        /// </summary>
+        /// <param name="toSelecao"></param>
+        private async void UpdateSelecao(Selecao toSelecao)
+        {
+            //URI += "/atualizarselecao";
+           using (var selecao =  new HttpClient())
+            {
+                HttpResponseMessage responseMessage = await selecao.PutAsJsonAsync(URI, toSelecao  +"/atualizarselecao");
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Seleção atuaizada com sucesso:");
+                }
+                else
+                {
+                    MessageBox.Show("Falha ao tentar atualizar a selecao:" + responseMessage.StatusCode);
+                }
+            }
+            GetAllSelecao();
+        }
+
+        /// <summary>
+        /// Deletar uma seleção passando o valor do id da seleção desejada
+        /// </summary>
+        /// <param name="id"></param>
+        private async void DeleteSelecao(int id)
+        {
+            URI += "/" + txtDeletarPorId.Text+ "/excluirselecao";
+            using (var selecao =  new HttpClient())
+            {
+                selecao.BaseAddress = new Uri(URI);
+                HttpResponseMessage responseMessage = await selecao.DeleteAsync(URI);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Seleção excluido com sucesso:");
+                }
+                else
+                {
+                    MessageBox.Show("Falha ao tentar excluir a seleção:" + responseMessage.StatusCode);
+                }
+            }
+            GetAllSelecao();
+        }
+
         #endregion
 
         #region Botoes
@@ -115,6 +160,30 @@ namespace WF_ConsumindoAPI
         {
             AddSelecao();
         }
+        private void btnDeletar_Click(object sender, EventArgs e)
+        {
+            DeleteSelecao(Convert.ToInt32(txtDeletarPorId.Text));
+        }
+        private void btnAtualizar_Click(object sender, EventArgs e)
+        {
+            //TODO: CORRIGIR PREENCHER OS TEXT BOX DE ACORDO COM O CLICK NO GRID PARA ATUALIZAR POSTERIORMENTE O REGISTRO SELECIONADO
+
+            Selecao toSelecao = new Selecao();
+            toSelecao.Id = Convert.ToInt32(dgvDados.SelectedRows[0].Cells[0]);
+            txtUNomeSelecao.Text = dgvDados.SelectedRows[0].Cells[1].ToString();
+            txtUContinente.Text = dgvDados.SelectedRows[0].Cells[2].ToString();
+            txtUNumeroParticipacoes.Text = dgvDados.SelectedRows[0].Cells[3].ToString();
+            txtUMelhorResultado.Text = dgvDados.SelectedRows[0].Cells[4].ToString();
+
+            //toSelecao.Id = Convert.ToInt32(dgvDados.SelectedRows[0].Cells[0]);
+            toSelecao.NomeSelecao = txtUNomeSelecao.Text;
+            toSelecao.Continente = txtUContinente.Text;
+            toSelecao.NumeroParticipacoes = Convert.ToInt32(txtUNumeroParticipacoes);
+            toSelecao.MelhorResultado = txtUMelhorResultado.Text;
+
+            UpdateSelecao(toSelecao);
+
+        }
 
         #endregion
 
@@ -128,7 +197,9 @@ namespace WF_ConsumindoAPI
             }
             dgvDados.Refresh();
         }
-        
+
         #endregion
+
+        
     }
 }
