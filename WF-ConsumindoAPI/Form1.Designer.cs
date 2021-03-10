@@ -59,6 +59,8 @@ namespace WF_ConsumindoAPI
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txtUNumeroParticipacoes = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtUId = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDados)).BeginInit();
@@ -134,6 +136,7 @@ namespace WF_ConsumindoAPI
             this.dgvDados.Name = "dgvDados";
             this.dgvDados.Size = new System.Drawing.Size(652, 160);
             this.dgvDados.TabIndex = 15;
+            this.dgvDados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDados_CellClick);
             // 
             // Inserir
             // 
@@ -256,6 +259,8 @@ namespace WF_ConsumindoAPI
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Controls.Add(this.txtUId);
             this.groupBox4.Controls.Add(this.txtUMelhorResultado);
             this.groupBox4.Controls.Add(this.label5);
             this.groupBox4.Controls.Add(this.txtUNomeSelecao);
@@ -265,16 +270,16 @@ namespace WF_ConsumindoAPI
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.txtUNumeroParticipacoes);
-            this.groupBox4.Location = new System.Drawing.Point(583, 13);
+            this.groupBox4.Location = new System.Drawing.Point(583, 10);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(273, 184);
+            this.groupBox4.Size = new System.Drawing.Size(273, 187);
             this.groupBox4.TabIndex = 23;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Atualizar ";
             // 
             // txtUMelhorResultado
             // 
-            this.txtUMelhorResultado.Location = new System.Drawing.Point(124, 107);
+            this.txtUMelhorResultado.Location = new System.Drawing.Point(124, 118);
             this.txtUMelhorResultado.Name = "txtUMelhorResultado";
             this.txtUMelhorResultado.Size = new System.Drawing.Size(121, 20);
             this.txtUMelhorResultado.TabIndex = 18;
@@ -282,7 +287,7 @@ namespace WF_ConsumindoAPI
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(41, 29);
+            this.label5.Location = new System.Drawing.Point(41, 40);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(77, 13);
             this.label5.TabIndex = 19;
@@ -290,14 +295,14 @@ namespace WF_ConsumindoAPI
             // 
             // txtUNomeSelecao
             // 
-            this.txtUNomeSelecao.Location = new System.Drawing.Point(124, 29);
+            this.txtUNomeSelecao.Location = new System.Drawing.Point(124, 40);
             this.txtUNomeSelecao.Name = "txtUNomeSelecao";
             this.txtUNomeSelecao.Size = new System.Drawing.Size(121, 20);
             this.txtUNomeSelecao.TabIndex = 15;
             // 
             // btnAtualizar
             // 
-            this.btnAtualizar.Location = new System.Drawing.Point(124, 142);
+            this.btnAtualizar.Location = new System.Drawing.Point(124, 153);
             this.btnAtualizar.Name = "btnAtualizar";
             this.btnAtualizar.Size = new System.Drawing.Size(121, 23);
             this.btnAtualizar.TabIndex = 4;
@@ -308,7 +313,7 @@ namespace WF_ConsumindoAPI
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(60, 58);
+            this.label6.Location = new System.Drawing.Point(60, 69);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(58, 13);
             this.label6.TabIndex = 20;
@@ -316,7 +321,7 @@ namespace WF_ConsumindoAPI
             // 
             // txtUContinente
             // 
-            this.txtUContinente.Location = new System.Drawing.Point(124, 55);
+            this.txtUContinente.Location = new System.Drawing.Point(124, 66);
             this.txtUContinente.Name = "txtUContinente";
             this.txtUContinente.Size = new System.Drawing.Size(121, 20);
             this.txtUContinente.TabIndex = 16;
@@ -324,7 +329,7 @@ namespace WF_ConsumindoAPI
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 84);
+            this.label7.Location = new System.Drawing.Point(7, 95);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(111, 13);
             this.label7.TabIndex = 21;
@@ -333,7 +338,7 @@ namespace WF_ConsumindoAPI
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(28, 114);
+            this.label8.Location = new System.Drawing.Point(28, 125);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(90, 13);
             this.label8.TabIndex = 22;
@@ -341,10 +346,26 @@ namespace WF_ConsumindoAPI
             // 
             // txtUNumeroParticipacoes
             // 
-            this.txtUNumeroParticipacoes.Location = new System.Drawing.Point(124, 81);
+            this.txtUNumeroParticipacoes.Location = new System.Drawing.Point(124, 92);
             this.txtUNumeroParticipacoes.Name = "txtUNumeroParticipacoes";
             this.txtUNumeroParticipacoes.Size = new System.Drawing.Size(121, 20);
             this.txtUNumeroParticipacoes.TabIndex = 17;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(97, 20);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(21, 13);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "ID:";
+            // 
+            // txtUId
+            // 
+            this.txtUId.Location = new System.Drawing.Point(124, 17);
+            this.txtUId.Name = "txtUId";
+            this.txtUId.Size = new System.Drawing.Size(121, 20);
+            this.txtUId.TabIndex = 23;
             // 
             // Form1
             // 
@@ -404,6 +425,8 @@ namespace WF_ConsumindoAPI
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtUNumeroParticipacoes;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtUId;
     }
 }
 

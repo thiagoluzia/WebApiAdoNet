@@ -25,6 +25,7 @@ namespace WF_ConsumindoAPI
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            txtUId.Enabled = false;
             GetAllSelecao();
         }
   
@@ -108,7 +109,7 @@ namespace WF_ConsumindoAPI
             //URI += "/atualizarselecao";
            using (var selecao =  new HttpClient())
             {
-                HttpResponseMessage responseMessage = await selecao.PutAsJsonAsync(URI, toSelecao  +"/atualizarselecao");
+                HttpResponseMessage responseMessage = await selecao.PutAsJsonAsync(URI  +"/atualizarselecao/", toSelecao);
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Seleção atuaizada com sucesso:");
@@ -166,40 +167,56 @@ namespace WF_ConsumindoAPI
         }
         private void btnAtualizar_Click(object sender, EventArgs e)
         {
-            //TODO: CORRIGIR PREENCHER OS TEXT BOX DE ACORDO COM O CLICK NO GRID PARA ATUALIZAR POSTERIORMENTE O REGISTRO SELECIONADO
-
             Selecao toSelecao = new Selecao();
-            toSelecao.Id = Convert.ToInt32(dgvDados.SelectedRows[0].Cells[0]);
-            txtUNomeSelecao.Text = dgvDados.SelectedRows[0].Cells[1].ToString();
-            txtUContinente.Text = dgvDados.SelectedRows[0].Cells[2].ToString();
-            txtUNumeroParticipacoes.Text = dgvDados.SelectedRows[0].Cells[3].ToString();
-            txtUMelhorResultado.Text = dgvDados.SelectedRows[0].Cells[4].ToString();
 
-            //toSelecao.Id = Convert.ToInt32(dgvDados.SelectedRows[0].Cells[0]);
+            toSelecao.Id = Convert.ToInt32(txtUId.Text);
             toSelecao.NomeSelecao = txtUNomeSelecao.Text;
             toSelecao.Continente = txtUContinente.Text;
-            toSelecao.NumeroParticipacoes = Convert.ToInt32(txtUNumeroParticipacoes);
+            toSelecao.NumeroParticipacoes = Convert.ToInt32(txtUNumeroParticipacoes.Text);
             toSelecao.MelhorResultado = txtUMelhorResultado.Text;
 
             UpdateSelecao(toSelecao);
-
         }
 
         #endregion
 
         #region Util
-
+        //TODO: Melhorar o limpar DataGrid ao efetuar alguma alteração nos registros, atualizando os dados do grid
         private void LimparDGV()
         {
-            for(int i =0; i < dgvDados.RowCount; i++)
+            dgvDados.DataSource = null;
+        }
+
+        /// <summary>
+        /// Atribui nos textbox os valores da linha selecionda 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvDados_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //Retorna o indice da linha no qual a célula foi clicada
+            var _linhaIndice = e.RowIndex;
+
+            //Se _linhaIndice é menor que -1 então retorna
+            if (_linhaIndice == -1)
             {
-                dgvDados.Rows[i].DataGridView.Columns.Clear();
+                return;
             }
-            dgvDados.Refresh();
+
+            DataGridViewRow linha = dgvDados.Rows[_linhaIndice];
+
+            //exibe os valores no textbox
+            txtUId.Text = linha.Cells[0].Value.ToString();
+            txtUNomeSelecao.Text = linha.Cells[1].Value.ToString();
+            txtUContinente.Text = linha.Cells[2].Value.ToString();
+            txtUNumeroParticipacoes.Text = linha.Cells[3].Value.ToString();
+            txtUMelhorResultado.Text = linha.Cells[4].Value.ToString();
+
+
         }
 
         #endregion
 
-        
+
     }
 }
